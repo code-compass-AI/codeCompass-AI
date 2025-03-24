@@ -51,6 +51,7 @@ authRouter.post('/google',async (req,res) => {
 
 
     } catch(error){
+        console.log(error);
         res.status(400).json({
             status : "error",
             message : "Google authentication failed"
