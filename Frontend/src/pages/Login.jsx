@@ -1,5 +1,5 @@
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { OauthGoogle } from "./OauthGoogle";
+import { OauthGoogle } from "../components/OauthGoogle";
 
 export function Login() {
 

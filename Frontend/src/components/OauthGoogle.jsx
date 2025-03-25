@@ -1,15 +1,14 @@
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export function OauthGoogle(){
 
+    const navigate = useNavigate();
 
 
     const handleGoogleSuccess = async (credentialsResponse) => {
-        console.log(credentialsResponse);
-        console.log(credentialsResponse.credential);
         try{
             const res = await axios.post(`${backendUrl}/auth/google`,{
                 accessToken : credentialsResponse.credential
@@ -17,6 +16,12 @@ export function OauthGoogle(){
             if(res.status === 200){
                 localStorage.setItem("token", res.data.token);
                 console.log('logged in');
+                if(res.data.hasApiKey){
+                    navigate("/dashboard");
+                }
+                else{
+                    navigate("/getkey");
+                }
             }
         } catch(error){
             console.log(error);
