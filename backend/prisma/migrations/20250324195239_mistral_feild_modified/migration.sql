@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Users" ALTER COLUMN "mistralKey" DROP NOT NULL,
+ALTER COLUMN "mistralKey" DROP DEFAULT;

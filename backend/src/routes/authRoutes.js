@@ -12,6 +12,28 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
 
+async function checkApiKey(userId) {
+    // im making this function to check if the user has an api key or not
+    // if the user has api key then return true
+    // else return false
+    const chcekKey = await prisma.users.findUnique(
+        {
+            where : {id : userId}
+        },
+        {
+            select : {
+                mistralKey : true
+            }
+        }
+        );
+        if(chcekKey.mistralKey){
+            return true;
+        }
+        else{  
+            return false;
+        }
+}
+
 
 
 authRouter.post('/google',async (req,res) => {
@@ -43,10 +65,13 @@ authRouter.post('/google',async (req,res) => {
             });
         }
 
+        const hasApiKey = await checkApiKey(userId = user.id);
+
         const token = jwt.sign({userId : user.id}, process.env.JWT_SECRET);
 
         res.json({
-            token 
+            token,
+            hasApiKey
         });
 
 
